@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Discord Medlemmer</title>
+  <style>
+    @font-face {
+      font-family: 'Pricedown';
+      src: url('pricedown.otf') format('opentype');
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('baggrundrank.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(1.5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container a {
+      display: flex;
+      height: 100%;
+      align-items: center;
+    }
+
+    .logo-container img {
+      max-height: 110px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .discord-button {
+      position: absolute;
+      right: 20px;
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .discord-button img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .discord-button:hover {
+      opacity: 0.8;
+    }
+
+    .server-status-button,
+    .team-button,
+    .donate-button {
+      position: absolute;
+      top: 50%;
+      padding: 8px 14px;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      transform: translateY(-50%);
+      z-index: 1100;
+      color: white;
+    }
+
+    .server-status-button {
+      left: 47%;
+      background: rgba(161, 55, 62, 0.8);
+      transform: translate(-150%, -50%);
+    }
+
+    .server-status-button:hover {
+      background: rgba(161, 55, 62, 1);
+    }
+
+    .team-button {
+      left: 47%;
+      background: rgba(161, 55, 62, 0.8);
+      transform: translate(150%, -50%);
+    }
+
+    .team-button:hover {
+      background: rgba(161, 55, 62, 1);
+    }
+
+    .donate-button {
+      right: 80px;
+      background: rgba(40, 167, 69, 0.8); /* grøn farve */
+    }
+
+    .donate-button:hover {
+      background: rgba(40, 167, 69, 1);
+    }
+
+    .active-link {
+      background: rgba(100, 100, 100, 0.7);
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0);
+      min-height: 100vh;
+      padding: 80px 2rem 2rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      box-sizing: border-box;
+    }
+
+    .content {
+      max-width: 1000px;
+      width: 100%;
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(1.5px);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-family: 'Pricedown', cursive;
+      font-size: 4rem;
+      color: #a1373e;
+      text-shadow: 0 0 8px #312f2f;
+      text-align: center;
+      margin-top: -20px;
+      margin-bottom: 2rem;
+    }
+
+    .role-group {
+      margin-bottom: 3rem;
+    }
+
+    .role-title {
+      font-size: 1.6rem;
+      border-bottom: 2px solid #e63946;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+
+    .members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .member-card {
+      flex: 0 0 75px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      word-wrap: break-word;
+    }
+
+    .member-card:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .member-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.25rem;
+      border: 2px solid #91212b;
+    }
+
+    .member-username {
+      font-weight: bold;
+      font-size: 0.8rem;
+      color: #fff;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <a href="forside.html" title="Gå til forsiden">
+        <img src="backsidelogo1.png" alt="Backside Logo" />
+      </a>
+    </div>
+    <a href="serverstatus.html" class="server-status-button">Server Status</a>
+    <a href="#" class="team-button active-link">Server Team</a>
+    <a href="donate.html" class="donate-button">Køb/Donate</a>
+    <a href="https://discord.gg/Y5HMt7P96X" target="_blank" class="discord-button" title="Besøg vores Discord">
+      <img src="discordlogo.png" alt="Discord Logo" />
+    </a>
+  </header>
+
+  <div class="overlay">
+    <div class="content">
+      <h1>Teamet Bag BacksideRP</h1>
+      <div id="members-container"></div>
+    </div>
+  </div>
+
+  <script>
+    const ROLE_ORDER = [
+      "Projekt Leder",
+      "Ejer",
+      "Med Ejer",
+      "Ledelsen",
+      "Teknik",
+      "Udvikler",
+      "Designer",
+      "Manager",
+      "C Manager",
+      "Ledelse",
+      "Whitelist"
+    ];
+
+    const ROLE_GROUPS = {
+      "Ledelsen": ["Manager", "C Manager", "Ledelse"],
+      "Teknik": ["Udvikler", "Designer"],
+    };
+
+    fetch("members.json")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("members-container");
+
+        function getGroup(member) {
+          for (const groupName in ROLE_GROUPS) {
+            if (member.roles.some(r => ROLE_GROUPS[groupName].includes(r))) {
+              return groupName;
+            }
+          }
+          for (const role of ROLE_ORDER) {
+            if (member.roles.includes(role)) return role;
+          }
+          return null;
+        }
+
+        const groups = {};
+        ROLE_ORDER.forEach(role => { groups[role] = []; });
+        Object.keys(ROLE_GROUPS).forEach(group => { groups[group] = []; });
+
+        data.forEach(member => {
+          const group = getGroup(member);
+          if (group) groups[group].push(member);
+        });
+
+        ROLE_ORDER.forEach(role => {
+          const members = groups[role];
+          if (!members || members.length === 0) return;
+
+          const roleDiv = document.createElement("div");
+          roleDiv.className = "role-group";
+
+          const title = document.createElement("div");
+          title.className = "role-title";
+          title.textContent = role;
+          roleDiv.appendChild(title);
+
+          const memberDiv = document.createElement("div");
+          memberDiv.className = "members";
+
+          members.forEach(m => {
+            const card = document.createElement("div");
+            card.className = "member-card";
+
+            const avatar = document.createElement("img");
+            avatar.className = "member-avatar";
+            avatar.src = m.avatar;
+            avatar.alt = m.username;
+
+            const name = document.createElement("div");
+            name.className = "member-username";
+            name.textContent = m.username;
+
+            card.appendChild(avatar);
+            card.appendChild(name);
+            memberDiv.appendChild(card);
+          });
+
+          roleDiv.appendChild(memberDiv);
+          container.appendChild(roleDiv);
+        });
+      })
+      .catch(err => {
+        document.getElementById("members-container").textContent = "Fejl ved indlæsning af members.json.";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>

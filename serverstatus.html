@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Server Status</title>
+  <style>
+    @font-face {
+      font-family: 'Pricedown';
+      src: url('fonts/pricedown.otf') format('opentype');
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('baggrund/baggrundrank.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(1.5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container a {
+      display: flex;
+      height: 100%;
+      align-items: center;
+    }
+
+    .logo-container img {
+      max-height: 110px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .discord-button {
+      position: absolute;
+      right: 20px;
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .discord-button img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .discord-button:hover {
+      opacity: 0.8;
+    }
+
+    .donate-button {
+      position: absolute;
+      right: 80px;
+      padding: 8px 14px;
+      background: rgba(40, 167, 69, 0.8);
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1100;
+    }
+
+    .donate-button:hover {
+      background: rgba(40, 167, 69, 0.8);
+    }
+
+    .server-status-button,
+    .team-button {
+      position: absolute;
+      top: 50%;
+      padding: 8px 14px;
+      background: rgba(161, 55, 62, 0.8);
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      transform: translateY(-50%);
+      z-index: 1100;
+    }
+
+    .server-status-button:hover,
+    .team-button:hover {
+      background: rgba(161, 55, 62, 1);
+    }
+
+    .server-status-button {
+      left: 47%;
+      transform: translate(-150%, -50%);
+    }
+
+    .team-button {
+      left: 47%;
+      transform: translate(150%, -50%);
+    }
+
+    .active-link {
+      background: rgba(100, 100, 100, 0.7);
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0);
+      min-height: 100vh;
+      padding: 80px 2rem 2rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      box-sizing: border-box;
+    }
+
+    .content {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(1.5px);
+      padding: 2rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Pricedown', cursive;
+      font-size: 4rem;
+      color: #a1373e;
+      text-shadow: 0 0 8px #312f2f;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    .status-box {
+      margin: 1rem auto 0;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
+
+    .active { background-color: rgba(0, 200, 0, 0.7); }
+    .restarting { background-color: rgba(255, 165, 0, 0.7); }
+    .down { background-color: rgba(200, 0, 0, 0.7); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <a href="forside.html" title="Gå til forsiden">
+        <img src="baggrund/backsidelogo1.png" alt="Backside Logo" />
+      </a>
+    </div>
+    <a href="serverstatus.html" class="server-status-button active-link" title="Du er her">Server Status</a>
+    <a href="index.html" class="team-button" title="Se teamet">Server Team</a>
+    <a href="donate.html" target="_blank" class="donate-button" title="Støt os">Køb/Donate</a>
+    <a href="https://discord.gg/Y5HMt7P96X" target="_blank" class="discord-button" title="Besøg vores Discord">
+      <img src="baggrund/discordlogo.png" alt="Discord Logo" />
+    </a>
+  </header>
+
+  <div class="overlay">
+    <div class="content">
+      <h1>Server Status</h1>
+      <div id="statusBox" class="status-box">Tjekker status...</div>
+      <p id="playerCount">Henter spillertal...</p>
+      <p><strong>Genstart tider:</strong> 00:00, 06:00, 12:00, 18:00</p>
+      <p>Her kan du se den nuværende status på vores FiveM server.</p>
+    </div>
+  </div>
+
+  <script>
+    async function checkServerStatus() {
+      const statusBox = document.getElementById("statusBox");
+      const playerCountEl = document.getElementById("playerCount");
+
+      const baseUrl = "http://YOUR_SERVER_IP:30120";
+      const infoUrl = `${baseUrl}/info.json`;
+      const playersUrl = `${baseUrl}/players.json`;
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+        const [infoResponse, playersResponse] = await Promise.all([
+          fetch(infoUrl, { signal: controller.signal }),
+          fetch(playersUrl, { signal: controller.signal })
+        ]);
+
+        clearTimeout(timeoutId);
+
+        if (infoResponse.ok && playersResponse.ok) {
+          const infoData = await infoResponse.json();
+          const playersData = await playersResponse.json();
+
+          const maxPlayers = infoData.vars?.sv_maxClients || 200;
+          const currentPlayers = playersData.length;
+
+          statusBox.textContent = "✅ Serveren er Aktiv";
+          statusBox.className = "status-box active";
+
+          playerCountEl.textContent = `${currentPlayers}/${maxPlayers} spillere online`;
+        } else {
+          statusBox.textContent = "🔄 Genstarter...";
+          statusBox.className = "status-box restarting";
+          playerCountEl.textContent = "Spillertal ukendt...";
+        }
+      } catch (error) {
+        statusBox.textContent = "❌ Serveren er Nede";
+        statusBox.className = "status-box down";
+        playerCountEl.textContent = "Kan ikke hente spillertal.";
+      }
+    }
+
+    checkServerStatus();
+    setInterval(checkServerStatus, 10000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Køb / Donate</title>
+  <style>
+    @font-face {
+      font-family: 'Pricedown';
+      src: url('fonts/pricedown.otf') format('opentype');
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('baggrund/baggrundrank.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(1.5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container a {
+      display: flex;
+      height: 100%;
+      align-items: center;
+    }
+
+    .logo-container img {
+      max-height: 110px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .discord-button {
+      position: absolute;
+      right: 20px;
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .discord-button img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .discord-button:hover {
+      opacity: 0.8;
+    }
+
+    .server-status-button,
+    .team-button,
+    .donate-button {
+      position: absolute;
+      top: 50%;
+      padding: 8px 14px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transform: translateY(-50%);
+      color: white;
+      z-index: 1100;
+      transition: background 0.3s ease;
+    }
+
+    .server-status-button {
+      left: 47%;
+      background: rgba(161, 55, 62, 0.8);
+      transform: translate(-150%, -50%);
+    }
+
+    .server-status-button:hover {
+      background: rgba(161, 55, 62, 1);
+    }
+
+    .team-button {
+      left: 47%;
+      background: rgba(161, 55, 62, 0.8);
+      transform: translate(150%, -50%);
+    }
+
+    .team-button:hover {
+      background: rgba(161, 55, 62, 1);
+    }
+
+    .donate-button {
+      right: 80px;
+      background: rgba(40, 167, 69, 0.8);
+    }
+
+    .donate-button:hover {
+      background: rgba(40, 167, 69, 1);
+    }
+
+    .active-link {
+      background: rgba(100, 100, 100, 0.7);
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0);
+      min-height: 100vh;
+      padding: 80px 2rem 2rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      box-sizing: border-box;
+    }
+
+    .layout {
+      display: flex;
+      flex-direction: row;
+      max-width: 1300px;
+      width: 100%;
+      gap: 2rem;
+    }
+
+    .tos-box {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(2px);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+    }
+
+    .tos-box h2 {
+      color: #ff6b6b;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    .tos-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .tos-box li {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .content {
+      flex: 2;
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(1.5px);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    h1 {
+      font-family: 'Pricedown', cursive;
+      font-size: 3.5rem;
+      color: #28a745;
+      text-shadow: 0 0 8px #000;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .product {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      width: 250px;
+      text-align: center;
+      transition: transform 0.3s ease, background 0.3s;
+    }
+
+    .product:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .product h2 {
+      margin-top: 0;
+      color: #28a745;
+      font-size: 1.5rem;
+    }
+
+    .product p {
+      font-size: 0.95rem;
+      margin: 0.5rem 0;
+    }
+
+    .product button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .product button:hover {
+      background: #218838;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.75);
+    }
+
+    .modal-content {
+      background-color: #222;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      color: white;
+      position: relative;
+    }
+
+    .close-btn {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: white;
+    }
+
+    .price-list {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .price-item {
+      background: rgba(40, 167, 69, 0.8);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <a href="forside.html" title="Gå til forsiden">
+        <img src="baggrund/backsidelogo1.png" alt="Backside Logo" />
+      </a>
+    </div>
+    <a href="serverstatus.html" class="server-status-button">Server Status</a>
+    <a href="index.html" class="team-button">Server Team</a>
+    <a href="#" class="donate-button active-link">Køb/Donate</a>
+    <a href="https://discord.gg/Y5HMt7P96X" target="_blank" class="discord-button" title="Besøg vores Discord">
+      <img src="baggrund/discordlogo.png" alt="Discord Logo" />
+    </a>
+  </header>
+
+  <div class="overlay">
+    <div class="layout">
+      <div class="tos-box">
+        <h2>T.O.S</h2>
+        <ul>
+          <li><strong>Alderskrav:</strong><br>Du skal være 15 år eller derover for at foretage køb. Er du under 15, kræver det samtykke fra forældre/værge.</li>
+          <li><strong>Ingen garanti for varighed:</strong><br>Købte fordele er midlertidige og kan til enhver tid bortfalde uden varsel, hvis serverens drift, regler eller vurdering tilsiger det.</li>
+          <li><strong>Misbrug og upassende adfærd:</strong><br>Hvis købte fordele benyttes på en måde, der skader spiloplevelsen for andre eller omgår serverens intentioner, kan disse rettigheder ophøre uden kompensation.</li>
+          <li><strong>Ingen refusion:</strong><br>Alle køb er endelige og refunderes ikke – uanset årsag, herunder ban, fortrydelse eller regelbrud.</li>
+          <li><strong>Ændringer og ansvar:</strong><br>Vi forbeholder os retten til løbende at ændre ranks og tilknyttede fordele. Det er købers ansvar at sikre korrekte oplysninger ved køb.</li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <h1>Køb / Donationer</h1>
+        <p>Støt serveren og få fede fordele! Herunder kan du vælge et produkt at støtte os med.</p>
+
+        <div class="products">
+          <div class="product">
+            <h2>Ranks</h2>
+            <p>Tryk på info for at se priser</p>
+            <button onclick="openModal('ranksModal')">Info</button>
+          </div>
+
+          <div class="product">
+            <h2>Ingame Coins</h2>
+            <p>dette er coins til ingame shoppen /donate</p>
+            <button onclick="openModal('carModal')">Info</button>
+          </div>
+
+          <div class="product"> 
+            <h2>Kommer Snart...</h2>
+            <p>Kommer Snart...</p>
+            <p><strong>123</strong>456</p> 
+            <button onclick="openModal('donateModal')">Info</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ranks Modal -->
+  <div id="ranksModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('ranksModal')">&times;</span>
+      <h2>Ranks</h2>
+      <div class="price-list">
+        <div class="price-item">Ejer Rank | 400,-</div>
+        <div class="price-item">Med Ejer | 350,-</div>
+        <div class="price-item">C Manager | 250,-</div>
+        <div class="price-item">Manager | 200,-</div>
+        <div class="price-item">Ledelse | 175,-</div>
+        <div class="price-item">Head of Staff | 150,-</div>
+        <div class="price-item">Head Admin | 125,-</div>
+        <div class="price-item">Senior Admin | 100,-</div>
+        <div class="price-item">Admin | 75,-</div>
+        <div class="price-item">Staff | 50,-</div>
+        <div class="price-item">Supporter | 30,-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Car Package Modal -->
+  <div id="carModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('carModal')">&times;</span>
+      <h2>Ingame Coins</h2>
+          <div class="price-item">500 Coins | 50,-</div>
+      <p>Disse coins er til ingame shoppen man tilgår med /donate</p>
+    </div>
+  </div>
+
+  <!-- Donation Modal -->
+  <div id="donateModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('donateModal')">&times;</span>
+      <h2>Kommer Snart</h2>
+      <p>Kommer Snart...</p>
+      <p><strong>123</strong>456</p>
+      <p>123</p>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

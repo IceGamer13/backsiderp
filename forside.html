@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Forside - BacksideRP</title>
+  <style>
+    @font-face {
+      font-family: 'Pricedown';
+      src: url('fonts/pricedown.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('baggrund/baggrundrank.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(1.5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container a {
+      display: flex;
+      height: 100%;
+      align-items: center;
+    }
+
+    .logo-container img {
+      max-height: 110px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .discord-button {
+      position: absolute;
+      right: 20px;
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .discord-button img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .discord-button:hover {
+      opacity: 0.8;
+    }
+
+    .server-status-button,
+    .team-button {
+      position: absolute;
+      top: 50%;
+      padding: 8px 14px;
+      background: rgba(161, 55, 62, 0.8);
+      color: white;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      transform: translateY(-50%);
+      z-index: 1100;
+    }
+
+    .server-status-button:hover,
+    .team-button:hover {
+      background: rgba(161, 55, 62, 1);
+    }
+
+    .server-status-button {
+      left: 47%;
+      transform: translate(-150%, -50%);
+    }
+
+    .team-button {
+      left: 47%;
+      transform: translate(150%, -50%);
+    }
+
+    .server-status-button.active-link {
+      background: rgba(100, 100, 100, 0.7);
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .donate-button {
+      position: absolute;
+      right: 80px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 8px 14px;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      background: rgba(40, 167, 69, 0.8);
+      color: white;
+      z-index: 1100;
+    }
+
+    .donate-button:hover {
+      background: rgba(40, 167, 69, 1);
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0);
+      min-height: 100vh;
+      padding: 80px 2rem 2rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      box-sizing: border-box;
+    }
+
+    .content {
+      max-width: 1000px;
+      width: 100%;
+      background: rgba(20, 20, 20, 0.65);
+      backdrop-filter: blur(1.5px);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-family: 'Pricedown', cursive;
+      font-size: 4rem;
+      color: #a1373e;
+      text-shadow: 0 0 8px #312f2f;
+      text-align: center;
+      margin-top: -20px;
+      margin-bottom: 2rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      text-align: center;
+      color: white;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <a href="forside.html" title="Gå til forsiden">
+        <img src="baggrund/backsidelogo1.png" alt="Backside Logo" />
+      </a>
+    </div>
+    <a href="serverstatus.html" class="server-status-button" title="Se server status">Server Status</a>
+    <a href="index.html" class="team-button" title="Se teamet">Server Team</a>
+    <a href="donate.html" class="donate-button" title="Støt os">Køb/Donate</a>
+    <a href="https://discord.gg/Y5HMt7P96X" target="_blank" class="discord-button" title="Besøg vores Discord">
+      <img src="baggrund/discordlogo.png" alt="Discord Logo" />
+    </a>
+  </header>
+
+  <div class="overlay">
+    <div class="content">
+      <h1>Velkommen til BacksideRP</h1>
+      <p>
+        Dette er forsiden for BacksideRP. Her kan du finde information om vores server,
+        kommende events, regler og meget mere. Brug menuen til at navigere rundt, eller klik på logoet for altid at komme tilbage til denne side.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
