@@ -12,5 +12,11 @@
     "roles": [
       "Projekt Leder"
     ]
+  },
+  {
+    "username": "123",
+    "avatar": "123.webp",
+    "roles": [
+      "Ejer"
+    ]
   }
-]
